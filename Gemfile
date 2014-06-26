@@ -21,6 +21,8 @@ end
 
 ## scss for css
 gem 'sass-rails', '4.0.1'
+gem 'bootstrap-sass', '2.3.2.0'
+gem 'sprockets', '2.11.0'
 
 ## java script compression
 gem 'uglifier', '2.1.1'
