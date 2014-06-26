@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    ZenTest (4.10.0)
     actionmailer (4.0.5)
       actionpack (= 4.0.5)
       mail (~> 2.5.4)
@@ -30,6 +31,11 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     arel (4.0.2)
+    autotest (4.4.6)
+      ZenTest (>= 4.4.1)
+    autotest-inotify (0.0.6)
+      autotest (>= 4.2.4)
+      rb-inotify
     builder (3.1.4)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -192,6 +198,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeresource
+  autotest-inotify
   capybara (= 2.1.0)
   childprocess (= 0.3.6)
   coffee-rails (= 4.0.1)
