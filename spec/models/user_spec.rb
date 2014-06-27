@@ -94,4 +94,15 @@ describe User do
 
   	it { should_not be_valid }
   end
+
+  describe "when email contains uppercase chars" do
+  	before do
+  		@user.email = "WHATEVER@ror.COM"
+  		@user.save
+  	end
+    it "should be converted to lowercase" do
+    	reloaded = User.find_by(name: 'Exp1')
+    	expect(reloaded.email).to eq "whatever@ror.com"
+    end
+  end
 end
