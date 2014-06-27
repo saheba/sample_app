@@ -66,7 +66,7 @@ describe User do
   	it "should be invalid" do
   		addr = %w[	user@foo,com user_at_foo.org 
   								example.user@foo. foo@bar_baz.com
-  								foo@bar+baz.com]
+  								foo@bar+baz.com foo@bar..com]
 			addr.each do |add|
 				@user.email = add
 				expect(@user).not_to be_valid
