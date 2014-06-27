@@ -36,6 +36,7 @@ GEM
     autotest-inotify (0.0.6)
       autotest (>= 4.2.4)
       rb-inotify
+    bcrypt-ruby (3.1.2)
     bootstrap-sass (2.3.2.0)
       sass (~> 3.2)
     builder (3.1.4)
@@ -201,6 +202,7 @@ PLATFORMS
 DEPENDENCIES
   activeresource
   autotest-inotify
+  bcrypt-ruby (= 3.1.2)
   bootstrap-sass (= 2.3.2.0)
   capybara (= 2.1.0)
   childprocess (= 0.3.6)
