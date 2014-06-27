@@ -36,7 +36,6 @@ describe User do
   	end
   end
 
-
   describe "when email format is valid" do
   	it "should be invalid" do
   		addr = %w[	user@foo.COM A_US-ER@f.oo.org 
@@ -46,5 +45,15 @@ describe User do
 				expect(@user).to be_valid
 			end  								
   	end
+  end
+
+  describe "when email add is already taken" do
+  	before do
+  		userdup = @user.dup
+  		userdup.email.upcase!
+  		userdup.save
+  	end
+
+  	it { should_not be_valid }
   end
 end
