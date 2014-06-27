@@ -10,6 +10,7 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
+  it { should respond_to(:authenticate) }
 
   it { should be_valid }
 
@@ -33,6 +34,26 @@ describe User do
 
   describe "when password does not match confirmation" do
   	before { @user.password_confirmation = "mismatch" }
+  	it { should_not be_valid }
+  end
+
+  describe "return value of authenticate method" do
+  	before { @user.save }
+  	let(:found_user) { User.find_by(email: @user.email) }
+
+  	describe "with valid password" do
+  		it { should eq found_user.authenticate(@user.password) }
+  	end
+
+  	describe "with invalid password" do
+  		let(:inval_user) { found_user.authenticate("inval") }
+  		it { should_not eq inval_user }
+  		specify { expect(inval_user).to be_false }
+  	end
+  end
+
+  describe "when password is too short" do
+		before { @user.password == @user.password_confirmation = "a"*5 }
   	it { should_not be_valid }
   end
 
