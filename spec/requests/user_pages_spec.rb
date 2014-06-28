@@ -43,7 +43,12 @@ describe "user pages" do
   		it "should create a user" do
   			expect { click_button submit }.to change(User, :count).by(1)
   		end  
-      it { should have_title(full_title('Example User')) }
+
+      describe "after saving the user" do
+        # why do we have to perform the button click again?
+        before { click_button submit }
+        it { should have_title(full_title('Example User')) }
+      end
   	end
   end
 end
