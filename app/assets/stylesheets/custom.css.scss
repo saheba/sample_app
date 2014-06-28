@@ -144,3 +144,17 @@ input, textarea, select, .uneditable-input {
 input {
     height: auto !important;
 }
+
+#error_explanation {
+    color: #f00;
+    ul {
+        list-style: none;
+        margin: 0 0 18px 0;
+    }
+}
+
+/* combine two bootstrap classes */
+.field_with_errors {
+    @extend .control-group;
+    @extend .error;
+}
