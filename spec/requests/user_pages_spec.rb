@@ -24,7 +24,13 @@ describe "user pages" do
   		it "should not create a user" do
   			# UsersController.user_params ensures this (see Hartl section 7.3.2)
   			expect { click_button submit }.not_to change(User, :count)
-  		end  		
+  	  end  		
+  	  it { should have_selector('div', text: 'The form contains 4 errors.') }
+  		it { should have_selector('li', text: "Name can't be blank") }
+  		it { should have_selector('li', text: "Email can't be blank") }
+  		it { should have_selector('li', text: "Password is too short (minimum is 6 characters)") }
+  		it { should have_selector('li', text: "Password confirmation can't be blank") }
+  		
   	end
 
   	describe "with valid information" do
