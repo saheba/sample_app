@@ -22,6 +22,7 @@ describe "user pages" do
 
   	describe "with invalid information" do
   		it "should not create a user" do
+  			# UsersController.user_params ensures this (see Hartl section 7.3.2)
   			expect { click_button submit }.not_to change(User, :count)
   		end  		
   	end
