@@ -1,4 +1,11 @@
 require 'factory_girl'
+require 'rspec/expectations'
+
+RSpec::Matchers.define :have_error_message do |msg|
+	match do |page|
+		expect(page).to have_selector('div.alert.alert-error', text: msg)
+	end
+end
 
 Given /^a user visits the signin page$/ do
   # subject { page } ## does not work in cucumber
@@ -12,7 +19,7 @@ When /^they submit invalid signin information$/ do
 end
 
 Then /^they should see an error message$/ do
-  expect(page).to have_selector('div.alert.alert-error')
+  expect(page).to have_error_message('Invalid')
 end
 
 
