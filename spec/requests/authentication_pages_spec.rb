@@ -27,9 +27,9 @@ describe "Authentication" do
   	describe "after sub" do 
         before { click_button "Sign in" }
         ## parsing for content as long as we do finally know how the page layout will look like
-        it { should_not have_content('Sign in') }
-        it { should have_content('Sign out') }
-        it { should have_content('Profile') }
+        it { should_not have_link('Sign in', href: signin_path) }
+        it { should have_link('Sign out', href: signout_path ) }
+        it { should have_link('Profile', href: user_path(user)) }
     end
   end
 end
