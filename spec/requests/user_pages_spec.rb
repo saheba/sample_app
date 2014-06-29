@@ -52,7 +52,11 @@ describe "user pages" do
         # why do we have to perform the button click again? 
         # > because it describes another example which is not related to this one.
         before { click_button submit }
+        let(:user) { User.find_by(email: "foo@bar.com") }
+
+        it { should have_link('Sign out') }        
         it { should have_title(full_title('Example User')) }
+        it { should have_selector('div.alert.alert-success', 'Welcome :)') }
       end
   	end
   end
