@@ -27,7 +27,7 @@ describe "user pages" do
   	  end  		
   	  
       describe "after sub" do 
-        before { click_button submit }
+        before { click_button submit } ## happens before each it-block?
         it { should have_selector('div', text: 'The form contains 6 errors.') }
     		it { should have_selector('li', text: "* Name can't be blank") }
     		it { should have_selector('li', text: "* Email can't be blank") }
@@ -42,13 +42,15 @@ describe "user pages" do
   			fill_in "Email", with: "foo@bar.com"
   			fill_in "Password", with: "foobar"
   			fill_in "Confirmation", with: "foobar"
+        ## happens once before it-block and once again before describe-block
   		end
   		it "should create a user" do
   			expect { click_button submit }.to change(User, :count).by(1)
   		end  
 
       describe "after saving the user" do
-        # why do we have to perform the button click again?
+        # why do we have to perform the button click again? 
+        # > because it describes another example which is not related to this one.
         before { click_button submit }
         it { should have_title(full_title('Example User')) }
       end
