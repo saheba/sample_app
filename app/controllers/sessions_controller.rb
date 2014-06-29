@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
 
 		else
 			# render sign in page again and show errors
-			flash[:error] = 'Invalid email/password combination'
+			flash.now[:error] = 'Invalid email/password combination'
 			render 'new'
 		end
 	end
