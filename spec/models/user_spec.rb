@@ -106,4 +106,12 @@ describe User do
     	expect(reloaded.email).to eq "whatever@ror.com"
     end
   end
+
+  describe "remember_token" do
+    before { @user.save }
+    its(:remember_token) { shhould_not be_blank }
+    # equivalent to:
+    # it { expect(@user.remember_token).not_to be blank }
+  end
+  
 end
