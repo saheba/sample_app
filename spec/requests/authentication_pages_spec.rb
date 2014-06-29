@@ -30,11 +30,17 @@ describe "Authentication" do
         fill_in "Password", with: user.password
         click_button 'Sign in'
       end
-      describe "after sub" do
+      describe "after successful sign in" do
         ## parsing for content as long as we do finally know how the page layout will look like
         it { should have_no_link('Sign in', href: signin_path) }
         it { should have_link('Sign out', href: signout_path ) }
         it { should have_link('Profile', href: user_path(user)) }
+
+        describe "a sign out should succeed" do
+        	before { click_link 'Sign out'}
+        	it { should have_link('Sign in') }
+        	it { should have_no_link('Sign out') }
+        end
       end
     end
   end

@@ -25,4 +25,10 @@ module SessionsHelper
 	def signed_in?
 		return !current_user.nil?
 	end
+
+	def sign_out
+		current_user.update_attribute(:remember_token, User.digest(@current_user.new_remember_token))
+		cookies.delete(:remember_token)
+		@current_user = nil
+	end
 end
