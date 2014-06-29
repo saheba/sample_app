@@ -109,9 +109,9 @@ describe User do
 
   describe "remember_token" do
     before { @user.save }
-    its(:remember_token) { shhould_not be_blank }
+    its(:remember_token) { should_not be_blank }
     # equivalent to:
     # it { expect(@user.remember_token).not_to be blank }
   end
-  
+
 end
