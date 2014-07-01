@@ -7,7 +7,7 @@ module SessionsHelper
 		user.update_attribute(:remember_token, User.digest(remember_token))
 		# just necessary if we want to use sign_in without a redirect
 		# a redirect reloads the current user, a rerendering doesn't
-		@current_user = user
+		current_user = user
 	end
 
 	# def current_user=(user)
@@ -17,9 +17,13 @@ module SessionsHelper
 	def current_user
 		# more robust in terms of null pointer exceptions
 		digest_token = (cookies && cookies[:remember_token]) ? User.digest(cookies[:remember_token]) : nil
-		return @current_user ||= (digest_token ? User.find_by(remember_token: digest_token) : nil)
+		return current_user ||= (digest_token ? User.find_by(remember_token: digest_token) : nil)
 		## this is compact style for
 		# return @current_user ? @current_user : User.find_by(...)		
+	end
+
+	def current_user?(user)
+		return current_user == user
 	end
 
 	def signed_in?
@@ -27,8 +31,17 @@ module SessionsHelper
 	end
 
 	def sign_out
-		current_user.update_attribute(:remember_token, User.digest(@current_user.new_remember_token))
+		current_user.update_attribute(:remember_token, User.digest(current_user.new_remember_token))
 		cookies.delete(:remember_token)
-		@current_user = nil
+		current_user = nil
+	end
+
+	def redirect_back_or(default)
+		redirect_to(session[:return_to] || default)
+		session.delete(:return_to)
+	end
+
+	def store_location
+		session[:return_to] = request.url if request.get?
 	end
 end

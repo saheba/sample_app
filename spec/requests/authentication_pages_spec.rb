@@ -51,6 +51,15 @@ describe "Authentication" do
         describe "visiting the edit page" do
           before { visit edit_user_path(user) }
           it { should have_title('Sign in') }
+          describe "after signing in" do
+            before do
+              fill_in "Email", with: user.email
+              fill_in "Password", with: user.password
+              click_button "Sign in"              
+            end
+
+            it { should have_title('Edit user') }
+          end
         end
 
         describe "submitting to the update action" do
@@ -71,8 +80,8 @@ describe "Authentication" do
         describe "trying to edit other user profile" do
           before { visit edit_user_path(wrong_user)}
 
-           it { should have_title(full_title('Edit')) }
-           it { should have_button('Save changes') }
+           it { should_not have_title(full_title('Edit')) }
+           it { should have_no_button('Save changes') }
         end
       end
 
@@ -85,7 +94,9 @@ describe "Authentication" do
           specify { expect(response).to redirect_to(root_url) }
         end
         describe "submitting a PATCH request" do
-          before { patch edit_user_path(wrong_user) }          
+          # patch must be send directly to the controller root /users 
+          # instead of sending it to the users/[...]/edit path.
+          before { patch user_path(wrong_user) }          
           specify { expect(response).to redirect_to(root_url) }        
         end
       end

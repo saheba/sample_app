@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :signed_in_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update]
 
   def new
   	@user = User.new
@@ -10,11 +11,13 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
+    # > covered by before action correct_user now    
   end
 
   def update
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
+    # > covered by before action correct_user now
     if @user.update_attributes(user_params)
       # handle successful update
       flash[:success] ="Profile updated"
@@ -42,6 +45,17 @@ class UsersController < ApplicationController
   end
 
   def signed_in_user
-    redirect_to signin_path, notice: 'Please sign in.' unless signed_in?
+    unless signed_in?
+      store_location
+      # using signed_in? method from helpers/sessions_helper
+      redirect_to signin_path, notice: 'Please sign in.'  
+    end    
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    
+     # using current_user? method from helpers/sessions_helper
+     redirect_to root_path unless current_user?(@user)
   end
 end
