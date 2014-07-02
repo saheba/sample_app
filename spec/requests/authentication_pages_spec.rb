@@ -33,6 +33,7 @@ describe "Authentication" do
         it { should have_no_link('Sign in', href: signin_path) }
         it { should have_link('Sign out', href: signout_path ) }
         it { should have_link('Profile', href: user_path(user)) }
+        it { should have_link('Users', href: users_path) }
         it { should have_link('Settings', href: edit_user_path(user)) }
 
         describe "accessing the user list" do
@@ -55,7 +56,7 @@ describe "Authentication" do
         describe "a sign out should succeed" do
         	before { click_link 'Sign out'}
         	it { should have_link('Sign in') }
-        	it { should have_no_link('Sign out') }          
+        	it { should have_no_link('Sign out') }
         end
       end
     end
@@ -67,7 +68,7 @@ describe "Authentication" do
 
       describe "in the Users controller" do
         describe "visiting the user index" do
-          before {visit users_path }          
+          before {visit users_path }
           it { should have_title('Sign in') }
         end
 
@@ -78,7 +79,7 @@ describe "Authentication" do
             before do
               fill_in "Email", with: user.email
               fill_in "Password", with: user.password
-              click_button "Sign in"              
+              click_button "Sign in"
             end
 
             it { should have_title('Edit user') }
@@ -99,7 +100,7 @@ describe "Authentication" do
 
       describe "simulated by capybara" do
         before { sign_in user }
-        
+
         describe "trying to edit other user profile" do
           before { visit edit_user_path(wrong_user)}
 
@@ -117,10 +118,10 @@ describe "Authentication" do
           specify { expect(response).to redirect_to(root_url) }
         end
         describe "submitting a PATCH request" do
-          # patch must be send directly to the controller root /users 
+          # patch must be send directly to the controller root /users
           # instead of sending it to the users/[...]/edit path.
-          before { patch user_path(wrong_user) }          
-          specify { expect(response).to redirect_to(root_url) }        
+          before { patch user_path(wrong_user) }
+          specify { expect(response).to redirect_to(root_url) }
         end
       end
     end
