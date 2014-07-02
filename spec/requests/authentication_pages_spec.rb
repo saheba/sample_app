@@ -27,12 +27,30 @@ describe "Authentication" do
     describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }
       before { sign_in user }
+
       describe "after successful sign in" do
         ## parsing for content as long as we do finally know how the page layout will look like
         it { should have_no_link('Sign in', href: signin_path) }
         it { should have_link('Sign out', href: signout_path ) }
         it { should have_link('Profile', href: user_path(user)) }
         it { should have_link('Settings', href: edit_user_path(user)) }
+
+        describe "accessing the user list" do
+          before do
+            FactoryGirl.create(:user, name: "Bob", email: "bob@example.com")
+            FactoryGirl.create(:user, name: "Ben", email: "ben@example.com")
+            visit users_path
+          end
+
+          it { should have_title('All users')}
+          it { should have_content(/all users/)}
+
+          it "should list each user" do
+            User.all.each do |user|
+              expect(page).to have_selector('li', text: user.name)
+            end
+          end
+        end
 
         describe "a sign out should succeed" do
         	before { click_link 'Sign out'}
