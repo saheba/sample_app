@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
   ## assigning block to callback hook with method reference
   before_create :create_remember_token
 
+  def admin?
+    return self.role == 'admin'
+  end
+
   def new_remember_token
     return SecureRandom.urlsafe_base64()
   end
@@ -17,7 +21,7 @@ class User < ActiveRecord::Base
   def User.digest(token)
     return Digest::SHA1.hexdigest(token.to_s)
   end
-  
+
   private
 
 	  def create_remember_token

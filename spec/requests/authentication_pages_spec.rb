@@ -47,7 +47,7 @@ describe "Authentication" do
           it { should have_content(/all users/)}
           describe "pagination" do
             before(:all) { 30.times { FactoryGirl.create(:user) } }
-            after(:all) { User.delet_all }
+            after(:all) { User.delete_all }
 
             it { should have_selector('div.pagination') }
             it "should list each user" do
@@ -97,6 +97,29 @@ describe "Authentication" do
           specify { expect(response).to redirect_to(signin_path) }
         end
 
+      end
+    end
+
+    describe "as non-admin user" do
+      let(:user) { FactoryGirl.create(:user)}
+      let(:non_admin) { FactoryGirl.create(:user)}
+
+      before { sign_in non_admin, no_capybara: true}
+
+      describe "submitting a DELTE request to destroy User" do
+        before { delete user_path(user) }
+        specify { expect(response).to redirect_to(root_url) }
+      end
+    end
+
+    describe "as admin user" do
+      let(:admin) { FactoryGirl.create(:admin)}
+
+      before { sign_in admin, no_capybara: true}
+
+      describe "submitting a DELTE request to destroy himself" do
+        before { delete user_path(admin) }
+        specify { expect(response).to redirect_to(root_url) }
       end
     end
 
