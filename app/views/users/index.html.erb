@@ -3,9 +3,9 @@
 <%= will_paginate %>
 
 <ul class="users">
-  <% @users.each do |user| %>
-    <li><%= gravatar_for user %><%= link_to user.name, user %></li>
-  <% end %>
+  <% #rails assumes that @users should be interated trough %>
+  <% #rails automatically uses _user.html.erb to render each user's list details %>
+    <%= render @users %>
 </ul>
 
 <%= will_paginate %>
