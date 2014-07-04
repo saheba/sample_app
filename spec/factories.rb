@@ -8,4 +8,10 @@ FactoryGirl.define do
       role 'admin'
     end
   end
+
+  factory :micropost do
+    content 'testpost'
+    ## TODO why does user have to be listed here, but created_at not
+    user
+  end
 end
