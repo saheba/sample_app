@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :signed_in_user, only: [:edit, :update, :index]
+  before_action :anonymous_user, only: [:new, :create]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
   before_action :not_self, only: :destroy
@@ -11,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def new
-  	@user = User.new
+  	   @user = User.new
   end
 
   def destroy
@@ -42,14 +43,14 @@ class UsersController < ApplicationController
   end
 
   def create
-  	@user = User.new(user_params)
-  	if @user.save
-      flash[:success] = "Welcome :)"
-      sign_in @user
-      redirect_to @user
-  	else
-  		render 'new'
-  	end
+       @user = User.new(user_params)
+       if @user.save
+         flash[:success] = "Welcome :)"
+         sign_in @user
+         redirect_to @user
+       else
+         render 'new'
+       end
   end
 
   private
@@ -71,6 +72,14 @@ class UsersController < ApplicationController
       store_location
       # using signed_in? method from helpers/sessions_helper
       redirect_to signin_path, notice: 'Please sign in.'
+    end
+  end
+
+  def anonymous_user    
+    if signed_in?
+      #store_location
+      # using signed_in? method from helpers/sessions_helper
+      redirect_to root_path, notice: 'You are already signed in.'
     end
   end
 

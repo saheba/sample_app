@@ -61,11 +61,41 @@ describe "user pages" do
   	end
   end
 
+	describe "as signed-in user" do
+		let!(:user) { FactoryGirl.create(:user) }
+		before do
+
+		end
+		describe "sign up page should not be available" do
+				before do
+					sign_in user
+					visit new_user_path
+				end
+				it { should_not have_title("#{base_title} | Signup") }
+		end
+
+		describe "sign up action should not be accessible" do
+			before do
+				sign_in user, no_capybara: true
+				get new_user_path
+			end
+			specify { expect(response).to redirect_to(root_path) }
+		end
+
+		describe "create user action should not be accessible" do
+			before do
+				 sign_in user, no_capybara: true
+				 post users_path
+			end
+			specify { expect(response).to redirect_to(root_path) }
+		end
+	end
+
   describe "edit" do
     let(:user) { FactoryGirl.create(:user) }
     before do
       sign_in user
-      visit edit_user_path(user)			
+      visit edit_user_path(user)
     end
 
     describe "page" do
