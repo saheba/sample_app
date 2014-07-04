@@ -13,6 +13,7 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin?) }
   it { should respond_to(:role) }
+  it { should respond_to(:microposts) }
   it { should respond_to(:remember_token) }
 
   it { should be_valid }
