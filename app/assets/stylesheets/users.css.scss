@@ -1,3 +1,48 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+/* colors */
+$lightGray: #999;
+$mediumGray: #eaeaea;
+$defaultGray: #555;
+$darkGray: #222;
+
+/* microposts */
+.microposts {
+  list-style: none;
+  margin: 10px 0 0 0;
+
+  li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-width: 1px 0px 0px 1px;
+    border-style: solid;
+    border-color: $mediumGray;
+    :first-child {
+      font-size: 14pt;
+    }
+    .timestamp {
+      font-size: 10pt;
+    }
+  }
+}
+
+.content {
+  display: block;
+}
+
+.timestamp {
+  display: $lightGray;
+}
+
+.gravatar {
+  float: left;
+  margin-right: 10px;
+}
+
+aside {
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
+  }
+}
