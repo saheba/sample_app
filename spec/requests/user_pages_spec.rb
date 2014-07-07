@@ -168,4 +168,17 @@ describe "user pages" do
 		end
 
 	end
+
+	describe "profile page" do
+		let(:user) { FactoryGirl.create(:user) }
+		let!(:p1) { FactoryGirl.create(:micropost, user: user, content: "Foo")}
+		let!(:p2) { FactoryGirl.create(:micropost, user: user, content: "Bar")}
+
+		before { visit user_path(user) }
+		it { should have_content(user.name) }
+		it { should have_title(user.name) }
+		it { should have_content("Foo") }
+		it { should have_content("Bar") }
+		it { should have_content(user.microposts.count) }
+	end
 end

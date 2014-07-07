@@ -23,6 +23,9 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
+    @posts = @user.microposts.paginate(page: params[:page])
+    # pagination only works on instance variables, but not on objects assigned
+    # to attributes of instance variables/objects
   end
 
   def edit
@@ -75,7 +78,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def anonymous_user    
+  def anonymous_user
     if signed_in?
       #store_location
       # using signed_in? method from helpers/sessions_helper
